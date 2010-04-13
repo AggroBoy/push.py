@@ -1,7 +1,7 @@
 # push.py
 ## What is it?
 
-push.py is a quick and (reasonably) dirty python script I knocked together to send [boxcar][1] push notifications to my iPhone. It keeps login details in a config file in your home directory so they don't have to be in the world-readable script, and allows sending the same notification to multiple boxcar accounts in one command.
+push.py is a quick and (reasonably) dirty python script I knocked together to send [boxcar][1] push notifications to my iPhone. It keeps login details in a config file in your home directory so they don't have to be in the world-readable script, and allows sending the same notification to multiple boxcar accounts in one command. Note that it doesn't send push notifications that other people can subscribe to; it just sends them to known accounts, for which you have the boxcar login details.
 
 ## Getting it
 1. Make sure you have boxcar active on your phone, and the growl service enabled on your account (growl is currently the only service which allows api access.)
