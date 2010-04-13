@@ -39,4 +39,8 @@ In which case, you could send notifications to both accounts with:
 
 Just bear in mind that if you don't specify a user using `-u` then 'user' is the default, so it's a good idea to make sure you always have that on in your config.
 
+## Disclaimer
+
+I knocked this script together in my lunch hour, so it's probably pretty buggy and you use it at your own risk. If it ends up burning your house down or shooting your dog, that's not my responsibility. If you notice anything glaring then let me know, or feel free to fork it on github and improve it. If you *do* improve it, please let me know, so I can use your better version.
+
 [1]: http://boxcar.io
