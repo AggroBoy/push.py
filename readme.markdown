@@ -37,7 +37,7 @@ In which case, you could send notifications to both accounts with:
 
     push.py -u user -u support Hi guys
 
-Just bear in mind that if you don't specify a user using `-u` then 'user' is the default, so it's a good idea to make sure you always have that on in your config.
+Just bear in mind that if you don't specify a user using `-u` then 'user' is the default, so it's a good idea to make sure you always have that one in your config.
 
 ## Disclaimer
 
