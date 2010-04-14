@@ -8,7 +8,6 @@ import ConfigParser
 import os
 from optparse import OptionParser
 
-
 def notify(username, password, sender, message):
     url = 'https://boxcar.io/notifications'
     values = {'notification[from_screen_name]' : sender, 'notification[message]' : message}
@@ -34,7 +33,6 @@ def notify(username, password, sender, message):
         return 1
     return 0
 
-
 def notify_user(user, sender, message):
     if (config.has_section(user)):
         username = config.get(user, 'username')
@@ -57,7 +55,7 @@ optionParser.add_option("-s", "--sender", dest="sender", help="The string to use
 message = " ".join(args)
 
 status = 0
-if (options.users == None):
+if (options.users is None):
     status = notify_user("user", options.sender, message)
 else:
     for user in options.users:
