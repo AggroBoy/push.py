@@ -8,16 +8,10 @@ import ConfigParser
 import os
 from optparse import OptionParser
 
-def notify_user(user, sender):
-    if (config.has_section(user)):
-        username = config.get(user, 'username')
-        password = config.get(user, 'password')
-    else:
-        print 'specified section (', user, ') not found in config file'
-        exit(1)
-    
+
+def notify(username, password, sender, message):
     url = 'https://boxcar.io/notifications'
-    values = {'notification[from_screen_name]' : sender, 'notification[message]' : " ".join(args)}
+    values = {'notification[from_screen_name]' : sender, 'notification[message]' : message}
     
     passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
     passman.add_password(None, url, username, password)
@@ -31,10 +25,25 @@ def notify_user(user, sender):
     except IOError, e:
         if (hasattr(e, 'reason')):
             print 'Error submitting http request: ', e.reason, '\n'
+            return 1
         if (hasattr(e, 'code')):
             print 'Error submitting http request: ',e.code, '\n'
+            return 1
     except Exception, e:
         print 'Unhandled error caught', e.str()
+        return 1
+    return 0
+
+
+def notify_user(user, sender, message):
+    if (config.has_section(user)):
+        username = config.get(user, 'username')
+        password = config.get(user, 'password')
+    else:
+        print 'specified section (', user, ') not found in config file'
+        return 1
+	
+    return notify(username, password, sender, message)
 
 
 config = ConfigParser.ConfigParser()
@@ -45,8 +54,14 @@ optionParser.add_option("-u", "--user", dest="users", action="append", help="A u
 optionParser.add_option("-s", "--sender", dest="sender", help="The string to use as the sender of the notification", default=platform.node())
 (options, args) = optionParser.parse_args()
 
+message = " ".join(args)
+
+status = 0
 if (options.users == None):
-    notify_user("user", options.sender)
+    status = notify_user("user", options.sender, message)
 else:
     for user in options.users:
-        notify_user(user, options.sender)
+        if (notify_user(user, options.sender, message) == 1):
+            status = 1
+
+sys.exit(status)
