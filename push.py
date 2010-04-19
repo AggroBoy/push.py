@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/env python
 
 import urllib
 import urllib2
@@ -47,12 +47,16 @@ def notify_user(user, sender, message):
 config = ConfigParser.ConfigParser()
 config.read([os.path.expanduser('~/.pushrc')])
     
-optionParser = OptionParser(usage="%prog [options] <message>", version="%prog 1.0")
+optionParser = OptionParser(usage="%prog [options] [<message>]", version="%prog 1.0")
 optionParser.add_option("-u", "--user", dest="users", action="append", help="A user section of the config file to use. Multiple users may be specified and the notification will be sent to all of them")
 optionParser.add_option("-s", "--sender", dest="sender", help="The string to use as the sender of the notification", default=platform.node())
+optionParser.add_option("-r", "--read-stdin", "--stdin", action="store_true", dest="stdin", default=False, help="Read the message to send from the standard input, rather than from the command line.")
 (options, args) = optionParser.parse_args()
 
-message = " ".join(args)
+if (options.stdin):
+    message = sys.stdin.read()
+else:
+    message = " ".join(args)
 
 status = 0
 if (options.users is None):
