@@ -41,7 +41,7 @@ Just bear in mind that if you don't specify a user using `-u` then 'user' is the
 
 If it's more convenient, you can specify the message to push on stdin, rather than the command line, using the `-r` option:
 
-    echo hello | push.py
+    echo hello | push.py -r
 
 ## Disclaimer
 
