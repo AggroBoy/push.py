@@ -7,10 +7,15 @@ import sys
 import ConfigParser
 import os
 from optparse import OptionParser
+from time import time
 
 def notify(username, password, sender, message):
     url = 'https://boxcar.io/notifications'
-    values = {'notification[from_screen_name]' : sender, 'notification[message]' : message}
+    values = {
+            'notification[from_screen_name]' : sender,
+            'notification[message]' : message,
+            'notification[from_remote_service_id]' : int(time()*100)
+            }
     
     passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
     passman.add_password(None, url, username, password)
