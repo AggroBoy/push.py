@@ -1,10 +1,10 @@
 #! /usr/bin/env python
 
-import urllib
-import urllib2
+import urllib.request, urllib.parse, urllib.error
+import urllib.request, urllib.error, urllib.parse
 import platform
 import sys
-import ConfigParser
+import configparser
 import os
 from optparse import OptionParser
 from time import time
@@ -17,24 +17,24 @@ def notify(username, password, sender, message):
             'notification[from_remote_service_id]' : int(time()*100)
             }
     
-    passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
+    passman = urllib.request.HTTPPasswordMgrWithDefaultRealm()
     passman.add_password(None, url, username, password)
-    authhandler = urllib2.HTTPBasicAuthHandler(passman)
-    opener = urllib2.build_opener(authhandler)
-    urllib2.install_opener(opener)
+    authhandler = urllib.request.HTTPBasicAuthHandler(passman)
+    opener = urllib.request.build_opener(authhandler)
+    urllib.request.install_opener(opener)
     
-    data = urllib.urlencode( values )
+    data = urllib.parse.urlencode( values )
     try:
-        response = urllib2.urlopen(url, data)
-    except IOError, e:
+        response = urllib.request.urlopen(url, data)
+    except IOError as e:
         if (hasattr(e, 'reason')):
-            print 'Error submitting http request: ', e.reason, '\n'
+            print('Error submitting http request: ', e.reason, '\n')
             return 1
         if (hasattr(e, 'code')):
-            print 'Error submitting http request: ',e.code, '\n'
+            print('Error submitting http request: ',e.code, '\n')
             return 1
-    except Exception, e:
-        print 'Unhandled error caught', e.str()
+    except Exception as e:
+        print('Unhandled error caught', e.str())
         return 1
     return 0
 
@@ -43,13 +43,13 @@ def notify_user(user, sender, message):
         username = config.get(user, 'username')
         password = config.get(user, 'password')
     else:
-        print 'specified section (', user, ') not found in config file'
+        print('specified section (', user, ') not found in config file')
         return 1
 	
     return notify(username, password, sender, message)
 
 
-config = ConfigParser.ConfigParser()
+config = configparser.ConfigParser()
 config.read([os.path.expanduser('~/.pushrc')])
     
 optionParser = OptionParser(usage="%prog [options] [<message>]", version="%prog 1.0")
