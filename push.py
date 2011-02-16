@@ -27,10 +27,10 @@ def notify(username, password, sender, message):
         response = urllib.request.urlopen(url, data)
     except IOError as e:
         if (hasattr(e, 'reason')):
-            print('Error submitting http request: ', e.reason, '\n')
+            print('Error submitting http request:', e.reason)
             return 1
         if (hasattr(e, 'code')):
-            print('Error submitting http request: ',e.code, '\n')
+            print('Error submitting http request:', e.code)
             return 1
     except Exception as e:
         print('Unhandled error caught', e.str())
