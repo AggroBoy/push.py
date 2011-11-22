@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 import urllib.request, urllib.error, urllib.parse
 import platform
@@ -24,7 +24,7 @@ def notify(username, password, sender, message):
 
     data = urllib.parse.urlencode( values )
     try:
-        response = urllib.request.urlopen(url, data)
+        response = urllib.request.urlopen(url, data.encode('utf8'))
     except IOError as e:
         if (hasattr(e, 'reason')):
             print('Error submitting http request:', e.reason)
